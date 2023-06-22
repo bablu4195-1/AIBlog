@@ -13,9 +13,9 @@ router.post('/',(req,res)=>{
 });
 
  router.get('/',(req,res)=>{
-   Post.find((err,likes)=>{
+   Post.find((err,posts)=>{
      if(err) return res.status(500).send(err);
-     return res.status(200).send(likes);
+     return res.status(200).send(posts);
     })
  })
 
