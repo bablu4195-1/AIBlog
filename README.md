@@ -1,1 +1,0 @@
-The main aim of this project is to take advantage of the generative pre-trained transformers to create content of topics like Aliens, Science Fiction particularly FTL
