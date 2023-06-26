@@ -1,6 +1,8 @@
 const app = require('./app');
 const port = 3000;
 
+require('dotenv').config();
+
 app.get('',(req,res)=>{
     res.send('Hello World');
 })
