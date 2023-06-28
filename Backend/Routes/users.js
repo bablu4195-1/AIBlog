@@ -10,8 +10,8 @@ const upload = multer({ dest: 'assets/' });
 const saltRounds = 10;
 const jwtPrivateKey = process.env.JWT_PRIVATE_KEY;
 
-router.post('/users',upload.single('profilePicture'),async (req,res)=>{  
-    console.log(req.file);  
+
+router.post('/users',upload.single('profilePicture'),async (req,res)=>{ 
     if (req.file) {  
       req.body.profilePicture = req.file.path;  
     }  
@@ -48,6 +48,7 @@ router.post('/login', async (req, res) => {
     if (!validPassword) {
       return res.status(400).send('Invalid email or password');
     }
+    
 
     const token = jwt.sign({ _id: user._id }, jwtPrivateKey);
     return res.status(200).send({ token: token });

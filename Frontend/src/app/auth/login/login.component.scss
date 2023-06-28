@@ -1,0 +1,57 @@
+
+.login-form {
+    width: 40%;
+    height: 40%;
+    background-color: hsl(180, 100%, 50%);
+}
+
+.main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #986342;
+}
+
+.form-entry {
+    margin: 5%;
+    font-weight: 400;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.submit-button {
+    margin: 0 0 0 4%;
+    border-radius: 15px;
+}
+
+.form-input-password {
+    margin-left: 4%;
+    padding: 1%;
+    outline: none;
+    border-radius: 5px;
+}
+
+.form-input-email {
+    margin-left: 10%;
+    padding: 1%;
+    outline: none;
+    border-radius: 5px;
+}
+
+.no-account-section {
+    display: flex;
+    margin: 2% 0 0 3%;
+    width: 50%;
+}
+
+.component-link {
+    margin: 0 3% 0 3%;
+    cursor: pointer;
+    // text-decoration: underline;
+}
+
+.component-link:hover {
+    color: blue;
+    text-decoration: underline;
+}

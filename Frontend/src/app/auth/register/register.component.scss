@@ -1,0 +1,26 @@
+.main-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    height: 100vh;
+}
+
+.register-input-field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;  /* This creates a space between each field */
+}
+
+.input-label {
+    margin-bottom: 10px;  /* This creates a space between the label and the input field */
+}
+
+.register-main-input {
+    width: 50%;
+    padding: 1%;
+}
+
+.submit-button {
+    margin: 5%
+}
