@@ -1,1 +1,29 @@
-<p>register works!</p>
+<div class="main-container">
+<div class="register-form">
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <div class="register-input-field">
+            <label class="input-label" >Username:</label>
+            <input class="register-main-input" type="text" formControlName="username" placeholder="Username">
+        </div>
+        <div class="register-input-field">
+            <label class="input-label" >Email:</label>
+            <input class="register-main-input" type="email" formControlName="email" placeholder="Email">
+        </div>
+        <div class="register-input-field">
+            <label class="input-label" >Password:</label>
+            <input class="register-main-input" type="password" formControlName="password" placeholder="Password">
+        </div>
+        <div class="register-input-field">
+            <label class="input-label" >Confirm Password:</label>
+            <input class="register-main-input" type="password" formControlName="confirmPassword" placeholder="Confirm Password">
+        </div>
+        <div class="register-input-image">
+            <label class="input-label" >Profile Picture:</label>
+            <input  type="file" accept="jpeg/jpg/png" formControlName="profilePicture" placeholder="Confirm Password">
+        </div>
+        <div class="submit-button" >
+            <button type="submit">Sign Up</button>
+        </div>
+    </form>
+</div>
+</div>
