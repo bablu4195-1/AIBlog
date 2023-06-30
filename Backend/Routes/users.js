@@ -70,7 +70,7 @@ router.post('/forgot-password', async (req,res)=>{
     console.log(tempPassword);
     bcrypt.hash(tempPassword,saltRounds,(err,hash)=>{
       if(err){
-        console.log("error in saving password");
+          console.log("error in saving password");
         return res.status(500).send(err);
       }
       tempPassword = hash;
@@ -108,22 +108,27 @@ router.post('/forgot-password', async (req,res)=>{
 });
 
 router.post('/change-password',async (req,res)=>{
-  bcrypt.hash(req.body.password,saltRounds,async (err,hash)=>{
+  const oldUser  = User.findOne({email: req.body.email});  
+  const tempPassword = await bcrypt.compare(req.body.tempPassword, oldUser.password);
+  if(tempPassword){
+  bcrypt.hash(req.body.changePassword,saltRounds,async (err,hash)=>{
     if(err){
       console.log("error in saving password");
       return res.status(500).send(err);
     }
-    req.body.password = hash;
-    const newUser = User.findOne({email: req.body.email});  
+    req.body.changePassword = hash;
   try {
-    const user = await newUser.save();
+    const user = await oldUser.save();
     console.log("request successfully");  
     return res.status(200).send(user);  
   } catch (err) {
     console.log(err);
     return res.status(500).send(err);  
   }
-  });
+});
+} else {
+  return res.status(500).send(err);
+}
 })
 
 router.get('/users', auth,async (req,res) => {
