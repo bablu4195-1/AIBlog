@@ -16,4 +16,8 @@ export class AuthService {
   signup(payload:any): Observable<any> {
     return this.http.post('http://localhost:3000/api/users/users',payload);
   }
+
+  forgotPassword(payload:any): Observable<any> {
+    return this.http.post('http://localhost:3000/api/users/forgot-password',payload);
+  }
 }

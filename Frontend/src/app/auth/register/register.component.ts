@@ -38,12 +38,19 @@ export class RegisterComponent implements OnInit {
     if (this.signupForm.valid) {
       //appending formdata
       const formData = new FormData();
+      let fileInput = document.querySelector('#my-file-input') as HTMLInputElement;
+      console.log(fileInput);
       Object.keys(this.signupForm.value).forEach(key => {
         if(key !== 'confirmPassword'){
           formData.append(key, this.signupForm.value[key]);
         }
       });
       // perform signup...
+      if (fileInput?.files && fileInput.files.length > 0) {
+        formData.append('profilePicture', fileInput.files[0]);
+    }
+       
+      console.log(formData);
       this.authService.signup(formData).subscribe((res:any) => {
         console.log(res);
         this.router.navigate(['/login']);
