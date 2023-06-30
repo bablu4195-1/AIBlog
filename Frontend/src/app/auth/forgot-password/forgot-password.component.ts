@@ -40,8 +40,8 @@ ngOnInit(): void {
     this.changedPattern = true;
     if(this.changePasswordForm.valid) {
       let payload = {
-        ...this.changePasswordForm,
-        email: this.email
+        email: this.email,
+        ...this.changePasswordForm.value,
       }
       this.authService.changePassword(payload).subscribe((res)=>{
        alert("password changed successfully",);
