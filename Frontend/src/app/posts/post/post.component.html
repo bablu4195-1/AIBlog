@@ -1,2 +1,50 @@
 <h1>Hello Posts</h1>
 <button (click)="addPost()">Add Posts</button>
+<form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="title">Title</label>
+      <input id="title" type="text" formControlName="title">
+      <div *ngIf="postForm.get('title')?.invalid">{{ getErrorMessage('title') }}</div>
+    </div>
+    
+    <div>
+        <label for="content">Content</label>
+        <textarea id="content" formControlName="content"></textarea>
+        <div *ngIf="postForm.get('content')?.invalid">{{ getErrorMessage('title') }}</div>
+    </div>
+<!--   
+    <div>
+      <label for="author">Author ID</label>
+      <input id="author" type="text" formControlName="author">
+      <div *ngIf="postForm.get('author').errors?.required">Author ID is required</div>
+    </div> -->
+  
+    <!-- <div>
+      <label for="username">Username</label>
+      <input id="username" type="text" formControlName="username">
+      <div *ngIf="postForm.get('username').errors?.required">Username is required</div>
+    </div> -->
+
+    <div>
+        <label for="content">Comments</label>
+        <textarea id="content" formControlName="content"></textarea>
+        <div *ngIf="postForm.get('comments')?.invalid">{{ getErrorMessage('comments') }}</div>
+    </div>
+  
+    <div formArrayName="tags">
+      <div *ngFor="let tag of tags.controls; index as i">
+        <label for="tag-{{i}}">Tag {{i + 1}}</label>
+        <input id="tag-{{i}}" type="text" [formControlName]="i">
+        <button type="button" (click)="removeTag(i)">Remove</button>
+      </div>
+      <button type="button" (click)="addTag()">Add Tag</button>
+    </div>
+  
+    <!-- <div>
+      <label for="views">Views</label>
+      <input id="views" type="number" formControlName="views">
+    </div> -->
+  
+    <button type="submit">Submit</button>
+  </form>
+  

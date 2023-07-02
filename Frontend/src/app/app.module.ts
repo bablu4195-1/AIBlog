@@ -3,8 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthModule } from './auth/auth.module';  // Import the AuthModule
+import { JwtInterceptor } from './auth/interceptor/jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,10 @@ import { AuthModule } from './auth/auth.module';  // Import the AuthModule
     HttpClientModule,
     AuthModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
