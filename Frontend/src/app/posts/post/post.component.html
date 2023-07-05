@@ -1,5 +1,9 @@
 <h1>Hello Posts</h1>
-<button (click)="addPost()">Add Posts</button>
+<div *ngIf="addButton">
+    <button (click)="addPost()">Add Posts</button>
+</div>
+
+<div *ngIf="postsForm">
 <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
     <div>
       <label for="title">Title</label>
@@ -12,24 +16,12 @@
         <textarea id="content" formControlName="content"></textarea>
         <div *ngIf="postForm.get('content')?.invalid">{{ getErrorMessage('title') }}</div>
     </div>
-<!--   
-    <div>
-      <label for="author">Author ID</label>
-      <input id="author" type="text" formControlName="author">
-      <div *ngIf="postForm.get('author').errors?.required">Author ID is required</div>
-    </div> -->
-  
-    <!-- <div>
-      <label for="username">Username</label>
-      <input id="username" type="text" formControlName="username">
-      <div *ngIf="postForm.get('username').errors?.required">Username is required</div>
-    </div> -->
 
-    <div>
+    <!-- <div>
         <label for="content">Comments</label>
         <textarea id="content" formControlName="content"></textarea>
         <div *ngIf="postForm.get('comments')?.invalid">{{ getErrorMessage('comments') }}</div>
-    </div>
+    </div> -->
   
     <div formArrayName="tags">
       <div *ngFor="let tag of tags.controls; index as i">
@@ -40,11 +32,20 @@
       <button type="button" (click)="addTag()">Add Tag</button>
     </div>
   
-    <!-- <div>
-      <label for="views">Views</label>
-      <input id="views" type="number" formControlName="views">
-    </div> -->
-  
     <button type="submit">Submit</button>
   </form>
-  
+</div>  
+
+<div>
+    <div class="post-card" *ngFor="let post of posts;let index = index">
+        <h2>{{ post.title }}</h2>
+        <p>{{ post.content }}</p>
+        <p><strong>Author:</strong> {{ post.username}}</p>
+        <!-- <p><strong>Comments:</strong> {{ post.comments }}</p> -->
+        <p><strong>Date:</strong> {{ post.date | date }}</p>
+        <p *ngIf="post.tags.length == 1"><strong>Tags:</strong> {{ post.tags }}</p>
+        <p *ngIf="post.tags.length > 1"><strong>Tags:</strong> {{ post.tags.join(', ') }}</p>
+        <p><strong>Views:</strong> {{ post.views }}</p>
+      </div>
+      
+</div>

@@ -8,11 +8,11 @@ import { CommonService } from 'src/app/services/common/common.service';
   styleUrls: ['./post.component.scss']
 })
 export class PostComponent implements OnInit {
-  postsForm: boolean = false
+  posts:any;
+  postsForm: boolean = false;
+  addButton: boolean = true;
   postForm: FormGroup = new FormGroup({});
- constructor(private commonService: CommonService, private formBuilder: FormBuilder) {
-
- }
+ constructor(private commonService: CommonService, private formBuilder: FormBuilder) {}
   ngOnInit(): void {
    this.postForm =  this.formBuilder.group({
       title: ['', Validators.required],
@@ -22,9 +22,11 @@ export class PostComponent implements OnInit {
       tags: this.formBuilder.array([]),
       // views: [0],
     });
+    this.getPosts();
  }
 
  addPost() {
+  this.addButton = false;
     this.postsForm = true;
  }
 
@@ -50,11 +52,11 @@ getErrorMessage(fieldName: string) {
 
 onSubmit() {
 if(this.postForm.valid){
-  let user = localStorage.getItem('username');
-  console.log(user);
+  let user_id = localStorage.getItem('user_id');
+  console.log(user_id);
   let payloadValue = {
     ...this.postForm.value,
-    author : user
+    author : user_id
   }
   this.commonService.addPost(payloadValue).subscribe((res)=>{
     console.log(res);
@@ -62,5 +64,13 @@ if(this.postForm.valid){
     console.log('Error Message', error);
   })
 }
+}
+
+getPosts() {
+  let user_id = localStorage.getItem('user_id');
+  console.log(user_id);
+  this.commonService.getPosts(user_id).subscribe((res)=>{
+    this.posts = res;
+  })
 }
 }
