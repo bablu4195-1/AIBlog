@@ -19,6 +19,7 @@ const Binance = require('node-binance-api');
 const binance = new Binance().options({
   APIKEY: process.env.BINANCE_API_KEY,
   APISECRET: process.env.BINANCE_API_SECRET,
+  timeout: 60000  // Set timeout to 60 seconds
 });
 
 // wsServer.on('request', (request) => {
@@ -53,11 +54,22 @@ wsServer.on('request', (request) => {
     const connection = request.accept(null, request.origin);
     connections.push(connection);
     
-    binance.websockets.miniTicker(async () => {
-        let ticker = await binance.prices();
+    const retry = async (fn, n) => {
+        for(let i = 0; i < n; i++) {
+          try {
+            return await fn();
+          } catch(err) {
+            if (err.code !== 'ESOCKETTIMEDOUT' || i === n - 1) throw err;
+          }
+        }
+      };
+      
+      binance.websockets.miniTicker(async () => {
+        let ticker = await retry(() => binance.prices(), 3);  // Retry up to 3 times
         const message = {"BTC":ticker.BTCUSDT};
         sendToAllClients(message);
-    });
+      });
+      
 
     connection.on('close', () => {
         connections = connections.filter((conn) => conn !== connection);
@@ -67,6 +79,8 @@ wsServer.on('request', (request) => {
 
 wsServer.on('close', (connection) => {
     console.log('Connection closed');
+    const newConnection = request.accept(null, request.origin);
+    connections.push(newConnection);
 });
 
 
