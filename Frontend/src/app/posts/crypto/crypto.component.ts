@@ -4,7 +4,7 @@ import { CryptosocketService } from 'src/app/services/socket/cryptosocket.servic
 import 'chartjs-adapter-date-fns';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { throttleTime } from 'rxjs/internal/operators/throttleTime';
- 
+
 @Component({
   selector: 'app-crypto',
   templateUrl: './crypto.component.html',
@@ -48,36 +48,49 @@ export class CryptoComponent implements OnInit {
       },
     },
   };
-  
-    public lineChartLegend = true;
 
-    constructor(private cryptoService: CryptosocketService, private cd: ChangeDetectorRef) { }
+  public lineChartLegend = true;
 
-    ngOnInit(): void {
-      this.displayGraph();
-    }
+  constructor(private cryptoService: CryptosocketService, private cd: ChangeDetectorRef) { }
 
-    displayGraph() {
-      this.cryptoSub = this.cryptoService.displayGraph().pipe(
-        throttleTime(2000)
-      ).subscribe((data: any) => {
-        const btcPrice = parseFloat(data.BTC);
-        // console.log(btcPrice);
-    
-        const timestamp = new Date();
-        let existingLabels = this.lineChartData.labels || [];
-        this.lineChartData = {
-          labels: [...existingLabels, timestamp],
-          datasets: [
-            {
-              ...this.lineChartData.datasets[0],
-              data: [...this.lineChartData.datasets[0].data, btcPrice]
-            }
-          ]
-        };
-    
-        this.cd.detectChanges();
-      });
-    }
-    
+  ngOnInit(): void {
+    this.displayGraph();
   }
+
+  displayGraph() {
+    const maxDataPoints = 10;  // Maximum number of data points to display at once
+
+    this.cryptoSub = this.cryptoService.displayGraph().pipe(
+      throttleTime(2000)
+    ).subscribe((data: any) => {
+      const btcPrice = parseFloat(data.BTC);
+
+      const timestamp = new Date();
+      let existingLabels = this.lineChartData.labels || [];
+      let existingData = this.lineChartData.datasets[0].data || [];
+
+      // If the arrays are full, remove the first element
+      if (existingLabels.length >= maxDataPoints) {
+        existingLabels.shift();
+        existingData.shift();
+      }
+
+      this.lineChartData = {
+        labels: [...existingLabels, timestamp],
+        datasets: [
+          {
+            ...this.lineChartData.datasets[0],
+            data: [...existingData, btcPrice]
+          }
+        ],
+      };
+
+      // Update the chart
+      // this.lineChartData.labels = existingLabels;
+      // this.lineChartData.datasets[0].data = existingData;
+      this.cd.detectChanges();
+    });
+  }
+
+
+}
