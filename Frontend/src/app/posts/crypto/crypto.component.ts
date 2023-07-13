@@ -64,17 +64,14 @@ export class CryptoComponent implements OnInit {
       throttleTime(2000)
     ).subscribe((data: any) => {
       const btcPrice = parseFloat(data.BTC);
-
       const timestamp = new Date();
       let existingLabels = this.lineChartData.labels || [];
       let existingData = this.lineChartData.datasets[0].data || [];
-
       // If the arrays are full, remove the first element
       if (existingLabels.length >= maxDataPoints) {
         existingLabels.shift();
         existingData.shift();
       }
-
       this.lineChartData = {
         labels: [...existingLabels, timestamp],
         datasets: [
