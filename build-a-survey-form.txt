@@ -1,0 +1,151 @@
+** start of undefined **
+
+<!DOCTYPE html>
+<html lang="en" >
+  <head>
+    <meta charset="UTF-8" >
+    <link rel="stylesheet" href="styles.css" > </link>
+    </head>
+    <body>
+      <h1 id="title">Survey Form</h1>
+      <p id="description"> Thank you for taking time to participate in the survey</p>
+      <form id="survey-form">
+        <fieldset class="online-form">
+          <label id="name-label" for="name"> Name
+          <input id="name" placeholder="Enter your name" type="text"  name="name" required/> 
+          </label>
+           <label id="email-label"  for="email"> Email
+          <input id="email"     placeholder="Enter your email" type="email"  name="email" required/> 
+          </label>
+          <label id="number-label" for="number"> Age <span>(Optional)</span>
+          <input id="number" placeholder="Enter your age" type="number"  name="number" min="20" max="120" /> 
+          </label>
+          <label for="role">
+            Which option describes your current role ?
+            <select id="dropdown" name="role">
+              <option>Select Current Role</option>
+              <option>Student</option>
+              <option>Free lancer</option>
+              <option>Full Time Job</option>
+              <option>Full Time Learner</option>
+              <option>Prefer not to say</option>
+              </select>
+            </label>
+            <p id="radio-head">
+              How did you hear about us </p>
+              <label for="linked-in" ><input type="radio" id="linked-in" class="radios" value="linked-in" name="radio-group" /> LinkedIn
+              </label>
+              <label for="twitter">
+              <input type="radio" id="twitter" class="radios" value="twitter" name="radio-group" /> Twitter</label>
+              <label for="snap">
+                <input type="radio" id="snap" class="radios" id="snap"  value="snap" name="radio-group" /> Snap
+              </label>
+              <label for="feature" >
+                      what's your feature in my site ?
+                       <select id="feature" name="feature">
+              <option>Select Feature</option>
+              <option>Consistency</option>
+              <option>Creativity</option>
+              <option>Absolutism</option>
+              <option>Persistence</option>
+              <option>I don't like anything</option>
+              </select>
+              </label>
+              <p id="radio-head"> Where i need to improve ? </p>
+              <label for="front-end">
+                 <input class="sameline" type="checkbox" value="front-end" id="front-end" name="front-end" /> Front End
+              </label>
+              <label for="back-end">
+                 <input type="checkbox" class="sameline" value="back-end"id="back-end" name="back-end" /> Back End
+              </label>
+              <label for="database">
+                 <input type="checkbox" class="sameline" 
+                 value="database" id="database" name="database" />  Database
+              </label>
+              <label for="data-vis">
+                 <input type="checkbox" id="data-vis" value="data_vis" class="sameline" name="data-vis" />  Data Visualization
+              </label>
+              <label for="open-source">
+                 <input type="checkbox" id="open-source" value="open_source" name="open-source" class="sameline" /> Open Source
+              </label>
+              <label for="comments">
+                Please add your comments
+                <textarea id="comments" name="comments" placeholder="Please add your comments here" rows="4" cols="40"></textarea>
+                </label>
+        <input id="submit" type="submit" />
+        </fieldset>
+      </form>
+      </body>
+  </html>
+
+** end of undefined **
+
+** start of undefined **
+
+body {
+  width:100%;
+  margin: 0;
+height: 100vh;  background-image: url(https://cdn.freecodecamp.org/testable-projects-fcc/images/survey-form-background.jpeg);
+}
+
+label {
+  display: block;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+input {
+  margin-top: 0.5rem;
+  width: 100%;
+  min-height: 2em;
+}
+
+select {
+  width: 100%;
+  margin-top: 0.5rem;
+  min-height: 2em
+}
+
+h1 , p {
+  text-align: center;
+  color: #fff;
+}
+
+.radios {
+  width: unset;
+  margin: 0 0.5em 0 0;vertical-align: middle;
+}
+
+#radio-head {
+  text-align: left;
+}
+
+fieldset {
+  background-color: rgba(27,27,27,0.8);
+  min-width: 150px;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px 20px 30px 20px;
+}
+
+.sameline {
+  width: unset;
+   vertical-align: middle;
+   margin: 0.1rem 0.5rem 0 0; 
+}
+textarea {
+  width: 100%;
+}
+
+input[type="submit"] {
+  width: 100%;
+  padding: 10px 20px;
+  color: #fff;
+  border-radius: 5px;
+  background-color: #37af65;
+}
+
+
+** end of undefined **
+
