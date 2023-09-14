@@ -1,0 +1,37 @@
+.main-section {
+  width: max-content;
+}
+.sidebar {
+  display: block;
+}
+.sidebar-items {
+  display: block;
+  min-height: auto;
+  height:auto;
+  width: 100%;
+  padding:12px;
+}
+
+a{
+  display: block;
+}
+
+.sub-menu {
+  padding-left: 20px;
+}
+
+.submenu-items {
+  padding: 12px;
+  display: block;
+}
+.sidebar-items:hover {
+  background-color: aqua;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.submenu-items:hover {
+  background-color: aqua;
+  border-radius: 10px;
+  cursor: pointer;
+}

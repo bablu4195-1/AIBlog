@@ -1,47 +1,86 @@
-<h1>Hello Posts</h1>
-
-<div class="my-4" *ngIf="addButton">
-  <button class="btn btn-primary" (click)="addPost()">Add Posts</button>
-</div>
-
-<div *ngIf="postsForm">
-  <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
-    <div class="mb-3">
-      <label for="title" class="form-label">Title</label>
-      <input id="title" type="text" class="form-control" formControlName="title">
-      <div *ngIf="postForm.get('title')?.invalid" class="text-danger">{{ getErrorMessage('title') }}</div>
-    </div>
-    
-    <div class="mb-3">
-      <label for="content" class="form-label">Content</label>
-      <textarea id="content" class="form-control" formControlName="content"></textarea>
-      <div *ngIf="postForm.get('content')?.invalid" class="text-danger">{{ getErrorMessage('content') }}</div>
-    </div>
-
-    <div formArrayName="tags">
-      <div class="mb-3" *ngFor="let tag of tags.controls; index as i">
-        <label for="tag-{{i}}" class="form-label">Tag {{i + 1}}</label>
-        <input id="tag-{{i}}" type="text" class="form-control" [formControlName]="i">
-        <button type="button" class="btn btn-outline-danger" (click)="removeTag(i)">Remove</button>
-      </div>
-      <button type="button" class="btn btn-outline-primary" (click)="addTag()">Add Tag</button>
-    </div>
-  
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
-</div>  
-
-<div>
-  <div class="post-card card my-4" *ngFor="let post of posts; let index = index">
-    <div class="card-body">
-      <h2 class="card-title">{{ post.title }}</h2>
-      <p class="card-text">{{ post.content }}</p>
-      <p><strong>Author:</strong> {{ post.username}}</p>
-      <p><strong>Date:</strong> {{ post.date | date }}</p>
-      <p *ngIf="post.tags.length == 1"><strong>Tags:</strong> {{ post.tags }}</p>
-      <p *ngIf="post.tags.length > 1"><strong>Tags:</strong> {{ post.tags.join(', ') }}</p>
-      <p><strong>Views:</strong> {{ post.views }}</p>
+<div class="main-content">
+  <h1>Hello Posts</h1>
+  <div *ngIf="updatePost">
+    <div class="my-4" *ngIf="addButton">
+      <button class="btn btn-primary" (click)="addPost()"> <span> </span>
+        <img id="add-post" src="../../../assets/t26_c6_a4_p2.png" alt="disagree"></button>
     </div>
   </div>
-  <app-crypto></app-crypto>
+
+  <div *ngIf="postsForm">
+    <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input id="title" type="text" class="form-control" formControlName="title">
+        <div *ngIf="postForm.get('title')?.invalid" class="text-danger">{{ getErrorMessage('title') }}</div>
+      </div>
+
+      <div class="mb-3">
+        <label for="content" class="form-label">Content</label>
+        <textarea id="content" class="form-control" formControlName="content"></textarea>
+        <div *ngIf="postForm.get('content')?.invalid" class="text-danger">{{ getErrorMessage('content') }}</div>
+      </div>
+
+      <div formArrayName="tags">
+        <div class="mb-3" *ngFor="let tag of tags.controls; index as i">
+          <label for="tag-{{i}}" class="form-label">Tag {{i + 1}}</label>
+          <input id="tag-{{i}}" type="text" class="form-control" [formControlName]="i">
+          <button type="button" class="btn btn-outline-danger" (click)="removeTag(i)">Remove</button>
+        </div>
+        <button type="button" class="btn btn-outline-primary" (click)="addTag()">Add Tag</button>
+      </div>
+      <div style="display: inline-block;">
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="button" class="btn btn-outline-secondary" (click)="cancelPosts()">Cancel</button>
+      </div>
+    </form>
+  </div>
+
+  <div *ngIf="updatePost == false">
+    <form [formGroup]="postForm" (ngSubmit)="onUpdateSubmit(postData._id)">
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input id="title" type="text" class="form-control" formControlName="title" [(ngModel)]="postData.title">
+        <div *ngIf="postForm.get('title')?.invalid" class="text-danger">{{ getErrorMessage('title') }}</div>
+      </div>
+
+      <div class="mb-3">
+        <label for="content" class="form-label">Content</label>
+        <textarea id="content" class="form-control" formControlName="content" [(ngModel)]="postData.content"></textarea>
+        <div *ngIf="postForm.get('content')?.invalid" class="text-danger">{{ getErrorMessage('content') }}</div>
+      </div>
+
+      <div formArrayName="tags">
+        <div class="mb-3" *ngFor="let tag of postData.tags; index as i">
+          <label for="tag-{{i}}" class="form-label">Tag </label>
+          <input id="tag-{{i}}" type="text" class="form-control" [formControlName]="tag" value={{tag}}>
+          <button type="button" class="btn btn-outline-danger" (click)="removeUpdatedTag(i,tag)">Remove</button>
+        </div>
+        <button type="button" class="btn btn-outline-primary" (click)="addUpdatedTag()">Add Tag</button>
+      </div>
+      <div style="display: inline-block;">
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="button" class="btn btn-outline-secondary" (click)="cancelPosts()">Cancel</button>
+      </div>
+    </form>
+  </div>
+
+
+  <div style="display:flex;">
+    <div class="post-card card my-4" *ngFor="let post of posts; let index = index">
+      <div class="card-body">
+        <h2 class="card-title">{{ post.title }}</h2>
+        <p class="card-text">{{ post.content }}</p>
+        <p><strong>Author:</strong> {{ post.username}}</p>
+        <p><strong>Date:</strong> {{ post.date | date }}</p>
+        <p *ngIf="post.tags.length == 1"><strong>Tags:</strong> {{ post.tags }}</p>
+        <p *ngIf="post.tags.length > 1"><strong>Tags:</strong> {{ post.tags.join(', ') }}</p>
+        <p><strong>Views:</strong> {{ post.views }}</p>
+      </div>
+      <div>
+        <button alt="Edit" (click)="updatingPost(index,post)">Update</button>
+      </div>
+    </div>
+    <!-- <app-crypto></app-crypto> -->
+  </div>
 </div>

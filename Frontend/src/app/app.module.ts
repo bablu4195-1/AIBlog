@@ -9,9 +9,10 @@ import { JwtInterceptor } from './auth/interceptor/jwt.interceptor';
 
 
 
+
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,

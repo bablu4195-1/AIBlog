@@ -1,0 +1,12 @@
+.page-content-section {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    min-height: calc(100vh - 110px);
+    background: #ffffff;
+  }
+  
+  .content {
+    width: 100%;
+  }
+  

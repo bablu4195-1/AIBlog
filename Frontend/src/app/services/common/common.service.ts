@@ -15,4 +15,14 @@ export class CommonService {
   getPosts(id:any) :Observable<any> {
     return this.http.get(`http://localhost:3000/api/posts/all-posts/${id}`)
   }
+
+  redditPosts(): Observable<any> {
+    return this.http.get(`http://localhost:3000/api/posts/reddit-posts`)
+  }
+
+  updatePost(payload:any,id:number): Observable<any> {
+    return this.http.patch(`http://localhost:3000/api/posts/update-post/${id}`,payload)
+  }
+
+
 }

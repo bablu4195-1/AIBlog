@@ -42,11 +42,37 @@ router.get('/reddit-posts',auth, async (req,res) => {
     }
 });
 
+router.patch('/update-post/:id', auth, async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+        //update the post with the new data
+        post.title = req.body.title;
+        post.description = req.body.description;
+        post.author = req.body.author;
+        //present date
+        post.date = Date.now();
+        post.content = req.body.content;
+        post.comments = req.body.comments;
+        post.save();
+       
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send(err);
+    }
+})
+
+
+
 router.get('/all-posts/:id', auth, async (req, res) => {
     try {
         const posts = await Post.find({ author: req.params.id });
         const author = await User.findById(req.params.id);
-
+        // console.log(posts)
+        //update the view count in posts
+        posts.forEach(post => {
+            post.views = post.views + 1;
+            post.save();
+        });
         // Map through the posts and add the username to each post
         const postsWithUsername = posts.map(post => {
             return {
