@@ -6,12 +6,16 @@ import { PostComponent } from './post/post.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CryptoComponent } from './crypto/crypto.component';
 import { NgChartsModule } from 'ng2-charts';
+import { NavigationComponent } from '../navigation/navigation.component';
+import { PostsViewComponent } from './posts-view/posts-view.component';
 
 
 @NgModule({
   declarations: [
     PostComponent,
-    CryptoComponent
+    CryptoComponent,
+    NavigationComponent,
+    PostsViewComponent
   ],
   imports: [
     CommonModule,

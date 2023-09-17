@@ -8,6 +8,7 @@ const User = require('../Models/User');
 const Comment =  require('../Models/Comment');
 const crypto = require('crypto');
 const Binance = require('node-binance-api');
+const { response } = require('../app');
 const binance = new Binance().options({
   APIKEY: process.env.BINANCE_API_KEY,
   APISECRET: process.env.BINANCE_API_SECRET,
@@ -31,36 +32,66 @@ router.post('/add-post', auth, async (req, res) => {
     }
 });
 
-router.get('/reddit-posts',auth, async (req,res) => {
-    try{
-        const url = await axios.get('https://www.reddit.com/r/Angular2.json');
-            const data = url.data;
-            return res.status(200).send(data);
-    } catch(error){
-        console.log("reddit api",error);
-        return res.status(500).send(error);
-    }
-});
+// router.get('/reddit-posts',auth, async (req,res) => {
+        
+//         try{
+//             const url = await axios.get('https://www.reddit.com/r/Angular2.json');
+//                 const data = url.data;
+//                 return res.status(200).send(data);
+//         } catch(error){
+//             console.log("reddit api",error);
+//             return res.status(500).send(error);
+//         }
+//     });
 
-router.get('/all-posts/:id', auth, async (req, res) => {
+router.patch('/update-post/:id', auth, async (req, res) => {
     try {
-        const posts = await Post.find({ author: req.params.id });
-        const author = await User.findById(req.params.id);
-
-        // Map through the posts and add the username to each post
-        const postsWithUsername = posts.map(post => {
-            return {
-                ...post._doc, // spread the properties of the post object
-                username: author.username, // add the username property
-            };
-        });
-
-        return res.status(200).send(postsWithUsername);
+        const post = await Post.findById(req.params.id);
+        //update the post with the new data
+        post.title = req.body.title;
+        post.description = req.body.description;
+        post.author = req.body.author;
+        //present date
+        post.date = Date.now();
+        post.content = req.body.content;
+        post.comments = req.body.comments;
+        post.save();
+       
     } catch (err) {
         console.log(err);
         return res.status(500).send(err);
     }
+})
+
+
+
+
+router.get('/all-posts/:id', auth, async (req, res) => {
+    try {
+      console.log("request successfully");
+      const posts = await Post.find({ author: req.params.id });
+      const author = await User.findById(req.params.id);
+      // Map through the posts and add the username to each post
+      posts.forEach(post => {
+          post.views = post.views + 1;
+          console.log("updated successfully")
+         //update the post with the new data in database
+         post.save();
+      });
+      const postsWithUsername = posts.map(post => {
+        return {
+          ...post._doc, // spread the properties of the post object
+          username: author.username, // add the username property
+        };
+      });
+      // console.log(postsWithUsername);
+      return res.status(200).send(postsWithUsername);
+    } catch (err) {
+      console.log(err);
+      return res.status(500).send(err);
+    }
 });
+  
 
 
 

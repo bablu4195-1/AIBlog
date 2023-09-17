@@ -1,10 +1,17 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { PostsViewComponent } from './posts-view/posts-view.component';
 import { PostComponent } from './post/post.component';
 
 const routes: Routes = [
   {
-    path:"post", component:PostComponent
+    path:"", component:PostsViewComponent,
+    children: [
+      {
+        path:"post",
+        component:PostComponent
+      }
+    ]
   }
 ];
 

@@ -33,7 +33,7 @@
             </label>
             <p id="radio-head">
               How did you hear about us </p>
-              <label for="linked-in" ><input type="radio" id="linked-in" class="radios" value="linked-in" name="radio-group" /> LinkedIn
+              <label for="linked-in"><input type="radio" id="linked-in" class="radios" value="linked-in" name="radio-group" /> LinkedIn
               </label>
               <label for="twitter">
               <input type="radio" id="twitter" class="radios" value="twitter" name="radio-group" /> Twitter</label>

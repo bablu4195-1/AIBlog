@@ -1,0 +1,16 @@
+<div class="main-section">
+    <div>
+        <p>Logo Section</p>
+    </div>
+    <!-- sidebar menu -->
+    <div class="sidebar" *ngFor="let data of admin_nav_group_data;let i = index;" >
+        <div class="main-menu">
+            <span class="sidebar-items" (click)="clickEvent(i)">{{data.name}}</span>
+            <div class="sub-menu" *ngIf="admin_nav_group_data[i]['selected']">
+                <div *ngFor="let submenu of data['submenu']; let j = index">
+                     <div class="submenu-items"><span>{{submenu.name}}</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

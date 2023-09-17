@@ -21,7 +21,11 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   console.log('Connected to the database!');
+  let arr = [1,2,3,4,5]
+  let arr2 = arr.splice(3,4)
+  console.log(arr2)
 });
+
 
 app.use('/assets', express.static('assets'));
 
