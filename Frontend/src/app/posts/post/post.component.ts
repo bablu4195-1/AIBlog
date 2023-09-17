@@ -1,6 +1,20 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, Signal, WritableSignal, effect, signal } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonService } from 'src/app/services/common/common.service';
+
+
+type Post = {
+  "_id": string;
+  "title": string;
+  "content": string;
+  "author": string;
+  "comments": string;
+  "tags": string[];
+  "views": number;
+  "date": string;
+  "__v": number;
+  "username": string;
+};
 
 
 @Component({
@@ -9,7 +23,8 @@ import { CommonService } from 'src/app/services/common/common.service';
   styleUrls: ['./post.component.scss']
 })
 export class PostComponent implements OnInit {
-  posts:any = [];
+  posts: WritableSignal<Array<any>> = signal([]);
+  postings:any = [];
   updatePost: boolean = true;
   postsForm: boolean = false;
   addButton: boolean = true;
@@ -25,8 +40,10 @@ export class PostComponent implements OnInit {
       tags: this.formBuilder.array([]),
       // views: [0],
     });
-    this.getPosts();
-    this.redditPosts();
+    // this.redditPosts();
+    this.gettingPosts();
+    // this.getPosts();
+
  }
 
  addPost() {
@@ -81,6 +98,7 @@ if(this.postForm.valid){
     console.log('Error Message', error);
   })
 }
+this.postsForm = !this.postsForm;
 }
 
 onUpdateSubmit(id:number) {
@@ -98,17 +116,26 @@ onUpdateSubmit(id:number) {
     })
   }
   this.updatePost = !this.updatePost;
+  this.getPosts();
 }
 
 
 getPosts() {
   let user_id = localStorage.getItem('user_id');
-  console.log(user_id);
   this.commonService.getPosts(user_id).subscribe((res)=>{
-    console.log(res);
-    // Check if the response is an array.
-    this.posts = res;
+    console.log("every interval",res);
+    this.postings = res;
+    this.posts.set(this.postings);
+  },(error)=>{
+    console.log('Error Message', error);
   })
+}
+
+gettingPosts() {
+  setInterval(()=>{
+    console.log("every 9 seconds")
+    this.getPosts();
+  },9000)
 }
 
 redditPosts() {

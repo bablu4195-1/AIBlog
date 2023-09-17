@@ -67,7 +67,7 @@
 
 
   <div style="display:flex;">
-    <div class="post-card card my-4" *ngFor="let post of posts; let index = index">
+    <div class="post-card card my-4" *ngFor="let post of posts() ; let index = index">
       <div class="card-body">
         <h2 class="card-title">{{ post.title }}</h2>
         <p class="card-text">{{ post.content }}</p>
